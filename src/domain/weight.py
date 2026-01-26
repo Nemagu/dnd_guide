@@ -9,16 +9,14 @@ class WeightUnit(StrEnum):
 
     @classmethod
     def from_str(cls, name: str) -> "WeightUnit":
-        match name.upper():
-            case cls.LB.name:
-                return cls.LB
-            case cls.KG.name:
-                return cls.KG
-            case _:
-                raise DomainException.invalid_data(
-                    f"для единиц измерения массы с названием {name} не удалось "
-                    "сопоставить внутренний тип"
-                )
+        upper_name = name.upper()
+        for member_name in cls._member_names_:
+            if member_name.upper() == upper_name:
+                return cls[member_name]
+        raise DomainException.invalid_data(
+            f"для единиц измерения массы с названием {name} не удалось "
+            "сопоставить внутренний тип"
+        )
 
 
 class Weight:
@@ -36,6 +34,10 @@ class Weight:
 
     def in_kg(self) -> float:
         return self._count / 2.205
+
+    @property
+    def count(self) -> float:
+        return self._count
 
     def __eq__(self, value: object) -> bool:
         if value is None:

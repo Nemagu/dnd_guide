@@ -13,20 +13,10 @@ class Modifier(StrEnum):
 
     @classmethod
     def from_str(cls, name: str) -> "Modifier":
-        match name.upper():
-            case cls.STRENGTH.name:
-                return cls.STRENGTH
-            case cls.DEXTERITY.name:
-                return cls.DEXTERITY
-            case cls.CONSTITUTION.name:
-                return cls.CONSTITUTION
-            case cls.INTELLECT.name:
-                return cls.INTELLECT
-            case cls.WISDOM.name:
-                return cls.WISDOM
-            case cls.CHARISMA.name:
-                return cls.CHARISMA
-            case _:
-                raise DomainException.invalid_data(
-                    f"для модификатора с названием {name} не удалось сопоставить внутреннее значение"
-                )
+        upper_name = name.upper()
+        for member_name in cls._member_names_:
+            if member_name.upper() == upper_name:
+                return cls[member_name]
+        raise DomainException.invalid_data(
+            f"для модификатора с названием {name} не удалось сопоставить внутреннее значение"
+        )

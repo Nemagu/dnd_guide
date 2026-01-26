@@ -26,47 +26,13 @@ class Skill(StrEnum):
 
     @classmethod
     def from_str(cls, name: str) -> "Skill":
-        match name.upper():
-            case cls.ACROBATICS.name:
-                return cls.ACROBATICS
-            case cls.ATHLETICS.name:
-                return cls.ATHLETICS
-            case cls.PERCEPTION.name:
-                return cls.PERCEPTION
-            case cls.SURVIVAL.name:
-                return cls.SURVIVAL
-            case cls.ANIMAL_HANDLING.name:
-                return cls.ANIMAL_HANDLING
-            case cls.INTIMIDATION.name:
-                return cls.INTIMIDATION
-            case cls.PERFORMANCE.name:
-                return cls.PERFORMANCE
-            case cls.HISTORY.name:
-                return cls.HISTORY
-            case cls.SLEIGHT_OF_HAND.name:
-                return cls.SLEIGHT_OF_HAND
-            case cls.ARCANA.name:
-                return cls.ARCANA
-            case cls.MEDICINE.name:
-                return cls.MEDICINE
-            case cls.DECEPTION.name:
-                return cls.DECEPTION
-            case cls.NATURE.name:
-                return cls.NATURE
-            case cls.INSIGHT.name:
-                return cls.INSIGHT
-            case cls.INVESTIGATION.name:
-                return cls.INVESTIGATION
-            case cls.RELIGION.name:
-                return cls.RELIGION
-            case cls.STEALTH.name:
-                return cls.STEALTH
-            case cls.PERSUASION.name:
-                return cls.PERSUASION
-            case _:
-                raise DomainException.invalid_data(
-                    f"для навыка с названием {name} не удалось сопоставить внутренний навык"
-                )
+        upper_name = name.upper()
+        for member_name in cls._member_names_:
+            if member_name.upper() == upper_name:
+                return cls[member_name]
+        raise DomainException.invalid_data(
+            f"для навыка с названием {name} не удалось сопоставить внутренний навык"
+        )
 
     def modifier(self) -> Modifier:
         cls = self.__class__
