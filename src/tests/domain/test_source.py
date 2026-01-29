@@ -5,17 +5,17 @@ import pytest
 from domain.exception import DomainException
 from domain.source import Source
 
-VALID_NAME = "It is valid name"
-VALID_DESCRIPTION = "It is valid description"
-VALID_SOURCE_ID = uuid4()
-VALID_NAME_IN_ENGLISH = "It is valid name in english"
+NAME = "It is valid name"
+DESCRIPTION = "It is valid description"
+SOURCE_ID = uuid4()
+NAME_IN_ENGLISH = "It is valid name in english"
 
 
 def generate_source(
-    source_id: UUID = VALID_SOURCE_ID,
-    name: str = VALID_NAME,
-    description: str = VALID_DESCRIPTION,
-    name_in_english: str = VALID_NAME_IN_ENGLISH,
+    source_id: UUID = SOURCE_ID,
+    name: str = NAME,
+    description: str = DESCRIPTION,
+    name_in_english: str = NAME_IN_ENGLISH,
 ):
     return Source(
         source_id=source_id,
@@ -27,7 +27,7 @@ def generate_source(
 
 def test_name_ok():
     source = generate_source()
-    assert source.name == VALID_NAME
+    assert source.name == NAME
 
 
 @pytest.mark.parametrize("name", ["", "I" * 101], ids=["empty", "too_long"])
@@ -38,7 +38,7 @@ def test_name_invalid(name):
 
 def test_description_ok():
     source = generate_source()
-    assert source.description == VALID_DESCRIPTION
+    assert source.description == DESCRIPTION
 
 
 def test_description_invalid():
@@ -48,7 +48,7 @@ def test_description_invalid():
 
 def test_name_in_english_ok():
     source = generate_source()
-    assert source.name_in_english == VALID_NAME_IN_ENGLISH
+    assert source.name_in_english == NAME_IN_ENGLISH
 
 
 @pytest.mark.parametrize("name", ["I" * 101], ids=["too_long"])
@@ -65,7 +65,7 @@ def test_new_name_ok():
 
 
 @pytest.mark.parametrize(
-    "new_name", ["", "I" * 101, VALID_NAME], ids=["empty", "too_long", "the_same"]
+    "new_name", ["", "I" * 101, NAME], ids=["empty", "too_long", "the_same"]
 )
 def test_new_name_invalid(new_name):
     source = generate_source()
