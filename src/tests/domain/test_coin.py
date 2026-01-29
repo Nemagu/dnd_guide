@@ -1,6 +1,6 @@
 import pytest
 
-from domain.coins import Coins, CoinType
+from domain.coin import Coins, CoinType
 from domain.exception import DomainException
 
 

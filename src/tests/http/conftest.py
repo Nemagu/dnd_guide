@@ -1,5 +1,3 @@
-from uuid import UUID, uuid4
-
 import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
